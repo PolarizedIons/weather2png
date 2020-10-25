@@ -95,11 +95,11 @@ def draw_line(img: Image, pos1: (int, int), pos2: (int, int), width: int = 2, fi
 
 
 def format_day_time(dt: datetime, offset: int) -> str:
-    return (dt + timedelta(seconds=offset)).strftime("%d %h %Y %H:%M")
+    return (dt + timedelta(seconds=offset)).strftime("%a, %d %h %H:%M")
 
 
 def format_day(dt: datetime, offset: int) -> str:
-    return (dt + timedelta(seconds=offset)).strftime("%d %h")
+    return (dt + timedelta(seconds=offset)).strftime("%a - %d %h")
 
 
 def format_time(dt: datetime, offset: int) -> str:
