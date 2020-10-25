@@ -1,7 +1,10 @@
 from datetime import datetime
 from io import BytesIO
+from os import path
+
 from flask import Flask, send_file
 from PIL import Image, ImageFont, ImageDraw
+# PyCharm will complain about this not resolving, IGNORE IT, IT WORKS
 from Api import get_weather, LOCATION_NAME
 
 app = Flask(__name__)
@@ -16,14 +19,16 @@ LARGE_FONT_SIZE = 50
 MEDIUM_FONT_SIZE = 25
 SMALL_FONT_SIZE = 15
 
-OPEN_SANS_EXTRA_LARGE = ImageFont.truetype("./fonts/OpenSans-Light.ttf", EXTRA_LARGE_FONT_SIZE)
-OPEN_SANS_LARGE = ImageFont.truetype("./fonts/OpenSans-Light.ttf", LARGE_FONT_SIZE)
-OPEN_SANS_MEDIUM = ImageFont.truetype("./fonts/OpenSans-Light.ttf", MEDIUM_FONT_SIZE)
-OPEN_SANS_SMALL = ImageFont.truetype("./fonts/OpenSans-Light.ttf", SMALL_FONT_SIZE)
-ICON_EXTRA_LARGE = ImageFont.truetype("./fonts/weathericons-regular-webfont.ttf", EXTRA_LARGE_FONT_SIZE)
-ICON_LARGE = ImageFont.truetype("./fonts/weathericons-regular-webfont.ttf", LARGE_FONT_SIZE)
-ICON_MEDIUM = ImageFont.truetype("./fonts/weathericons-regular-webfont.ttf", MEDIUM_FONT_SIZE)
-ICON_SMALL = ImageFont.truetype("./fonts/weathericons-regular-webfont.ttf", SMALL_FONT_SIZE)
+dir_path = path.dirname(path.realpath(__file__))
+
+OPEN_SANS_EXTRA_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), EXTRA_LARGE_FONT_SIZE)
+OPEN_SANS_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), LARGE_FONT_SIZE)
+OPEN_SANS_MEDIUM = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), MEDIUM_FONT_SIZE)
+OPEN_SANS_SMALL = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), SMALL_FONT_SIZE)
+ICON_EXTRA_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), EXTRA_LARGE_FONT_SIZE)
+ICON_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), LARGE_FONT_SIZE)
+ICON_MEDIUM = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), MEDIUM_FONT_SIZE)
+ICON_SMALL = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), SMALL_FONT_SIZE)
 
 ICON_MAP = {
     '01d': '\uf00d',
@@ -192,4 +197,4 @@ def get_image_route():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
