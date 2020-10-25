@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from io import BytesIO
 from os import path
 
-from flask import Flask, send_file
+from flask import Flask, send_file, Response
 from PIL import Image, ImageFont, ImageDraw
 # PyCharm will complain about this not resolving, IGNORE IT, IT WORKS
 from Api import get_weather, LOCATION_NAME
@@ -194,6 +194,14 @@ def serve_image(img: Image):
 @app.route('/')
 def get_image_route():
     return serve_image(make_weather_image())
+
+
+@app.after_request
+def add_header(res: Response):
+    res.headers["Pragma"] = "no-cache"
+    res.headers["Expires"] = "0"
+    res.headers['Cache-Control'] = 'no-store'
+    return res
 
 
 if __name__ == "__main__":
