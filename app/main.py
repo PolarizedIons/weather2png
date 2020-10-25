@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from io import BytesIO
 from os import path
 
@@ -94,23 +94,23 @@ def draw_line(img: Image, pos1: (int, int), pos2: (int, int), width: int = 2, fi
     return img
 
 
-def format_day_time(dt: datetime) -> str:
-    return dt.strftime("%d %h %Y %H:%M")
+def format_day_time(dt: datetime, offset: int) -> str:
+    return (dt + timedelta(seconds=offset)).strftime("%d %h %Y %H:%M")
 
 
-def format_day(dt: datetime) -> str:
-    return dt.strftime("%d %h")
+def format_day(dt: datetime, offset: int) -> str:
+    return (dt + timedelta(seconds=offset)).strftime("%d %h")
 
 
-def format_time(dt: datetime) -> str:
-    return dt.strftime("%H:%M")
+def format_time(dt: datetime, offset: int) -> str:
+    return (dt + timedelta(seconds=offset)).strftime("%H:%M")
 
 
-def get_now_dt() -> str:
-    return format_day_time(datetime.now())
+def get_now_dt(offset: int) -> str:
+    return format_day_time(datetime.utcnow(), offset)
 
 
-def brearing_to_direction(bearing: int) -> str:
+def bearing_to_direction(bearing: int) -> str:
     bearing = bearing % 360
 
     compass_sector = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"]
@@ -127,13 +127,13 @@ def make_weather_image() -> Image:
     today_min_temp = str(int(weather['daily'][0]['temp']['min'])) + "°C"
     today_max_temp = str(int(weather['daily'][0]['temp']['max'])) + "°C"
     today_min_max_temp = today_min_temp + " / " + today_max_temp
-    today_sunrise = format_time(datetime.fromtimestamp(weather['daily'][0]['sunrise']))
-    today_sunset = format_time(datetime.fromtimestamp(weather['daily'][0]['sunset']))
+    today_sunrise = format_time(datetime.fromtimestamp(weather['daily'][0]['sunrise']), weather['timezone_offset'])
+    today_sunset = format_time(datetime.fromtimestamp(weather['daily'][0]['sunset']), weather['timezone_offset'])
     today_daytime = today_sunrise + " - " + today_sunset
     today_pressure = str(weather['daily'][0]['pressure']) + "kPa"
     today_humidity = str(weather['daily'][0]['humidity']) + "%"
     today_uv = str(weather['daily'][0]['uvi'])
-    today_wind = str(int(weather['current']['wind_speed'])) + "m/s " + brearing_to_direction(weather['current']['wind_deg'])
+    today_wind = str(int(weather['current']['wind_speed'])) + "m/s " + bearing_to_direction(weather['current']['wind_deg'])
 
     # IMAGE CREATION
     img = create_image()
@@ -142,7 +142,7 @@ def make_weather_image() -> Image:
     header_rect_size = (DISPLAY_SIZE[0], 60)
     draw_rect(img, (0, 0), header_rect_size)
     draw_text(img, LOCATION_NAME, (10, -10), OPEN_SANS_LARGE, WHITE, header_rect_size)  # location name
-    draw_text(img, get_now_dt(), (-10, -10), OPEN_SANS_MEDIUM, WHITE, header_rect_size)  # date & time
+    draw_text(img, get_now_dt(weather['timezone_offset']), (-10, -10), OPEN_SANS_MEDIUM, WHITE, header_rect_size)  # date & time
 
     # CURRENT WEATHER
     draw_text(img, current_icon, (DISPLAY_SIZE[0] / 8 - 55, 90), ICON_EXTRA_LARGE)  # current icon
@@ -172,7 +172,7 @@ def make_weather_image() -> Image:
         x2 = i * (DISPLAY_SIZE[0] / 6) + (DISPLAY_SIZE[0] / 12)
 
         icon = ICON_MAP[forecast['weather'][0]['icon']]
-        day = format_day(datetime.fromtimestamp(forecast['dt']))
+        day = format_day(datetime.fromtimestamp(forecast['dt']), weather['timezone_offset'])
         min_temp = str(int(forecast['temp']['min'])) + "°C"
         max_temp = str(int(forecast['temp']['max'])) + "°C"
         min_max_temp = min_temp + " / " + max_temp
