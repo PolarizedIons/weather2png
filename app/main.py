@@ -130,7 +130,7 @@ def make_weather_image() -> Image:
     today_sunrise = format_time(datetime.fromtimestamp(weather['daily'][0]['sunrise']), weather['timezone_offset'])
     today_sunset = format_time(datetime.fromtimestamp(weather['daily'][0]['sunset']), weather['timezone_offset'])
     today_daytime = today_sunrise + " - " + today_sunset
-    today_pressure = str(weather['daily'][0]['pressure']) + "kPa"
+    today_pressure = str(weather['daily'][0]['pressure']) + "hPa"
     today_humidity = str(weather['daily'][0]['humidity']) + "%"
     today_uv = str(weather['daily'][0]['uvi'])
     today_wind = str(int(weather['current']['wind_speed'])) + "m/s " + bearing_to_direction(weather['current']['wind_deg'])
@@ -154,7 +154,7 @@ def make_weather_image() -> Image:
     draw_text(img, "daytime", (DISPLAY_SIZE[0] / 2 + 25, 80), OPEN_SANS_SMALL)  # sunrise/sunset caption
     draw_text(img, "pressure", (DISPLAY_SIZE[0] / 2 + 25, 110), OPEN_SANS_SMALL)  # pressure caption
     draw_text(img, "humidity", (DISPLAY_SIZE[0] / 2 + 25, 140), OPEN_SANS_SMALL)  # humidity caption
-    draw_text(img, "UV", (DISPLAY_SIZE[0] / 2 + 25, 170), OPEN_SANS_SMALL)  # UV caption
+    draw_text(img, "Midday UV", (DISPLAY_SIZE[0] / 2 + 25, 170), OPEN_SANS_SMALL)  # UV caption
     draw_text(img, "wind", (DISPLAY_SIZE[0] / 2 + 25, 200), OPEN_SANS_SMALL)  # wind caption
 
     draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 2 + 100, 70), OPEN_SANS_MEDIUM)  # sunrise text
