@@ -98,8 +98,12 @@ def format_day_time(dt: datetime, offset: int) -> str:
     return (dt + timedelta(seconds=offset)).strftime("%a, %d %h %H:%M")
 
 
+def format_weekday(dt: datetime, offset: int) -> str:
+    return (dt + timedelta(seconds=offset)).strftime("%A")
+
+
 def format_day(dt: datetime, offset: int) -> str:
-    return (dt + timedelta(seconds=offset)).strftime("%a - %d %h")
+    return (dt + timedelta(seconds=offset)).strftime("%d %h")
 
 
 def format_time(dt: datetime, offset: int) -> str:
@@ -157,11 +161,11 @@ def make_weather_image() -> Image:
     draw_text(img, "Midday UV", (DISPLAY_SIZE[0] / 2 + 25, 170), OPEN_SANS_SMALL)  # UV caption
     draw_text(img, "wind", (DISPLAY_SIZE[0] / 2 + 25, 200), OPEN_SANS_SMALL)  # wind caption
 
-    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 2 + 100, 70), OPEN_SANS_MEDIUM)  # sunrise text
-    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 2 + 100, 100), OPEN_SANS_MEDIUM)  # pressure text
-    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 2 + 100, 130), OPEN_SANS_MEDIUM)  # humidity text
-    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 2 + 100, 160), OPEN_SANS_MEDIUM)  # UV text
-    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 2 + 100, 190), OPEN_SANS_MEDIUM)  # wind text
+    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 2 + 120, 70), OPEN_SANS_MEDIUM)  # sunrise text
+    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 2 + 120, 100), OPEN_SANS_MEDIUM)  # pressure text
+    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 2 + 120, 130), OPEN_SANS_MEDIUM)  # humidity text
+    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 2 + 120, 160), OPEN_SANS_MEDIUM)  # UV text
+    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 2 + 120, 190), OPEN_SANS_MEDIUM)  # wind text
 
     # FORECAST WEATHER
 
@@ -173,12 +177,14 @@ def make_weather_image() -> Image:
 
         icon = ICON_MAP[forecast['weather'][0]['icon']]
         day = format_day(datetime.fromtimestamp(forecast['dt']), weather['timezone_offset'])
+        weekday = format_weekday(datetime.fromtimestamp(forecast['dt']), weather['timezone_offset'])
         min_temp = str(int(forecast['temp']['min'])) + "°C"
         max_temp = str(int(forecast['temp']['max'])) + "°C"
         min_max_temp = min_temp + " / " + max_temp
 
-        draw_text_centered(img, icon, (x1, x2), 255, ICON_LARGE)  # forecast icon
-        draw_text_centered(img, day, (x1, x2), 330, OPEN_SANS_SMALL)  # forecast date
+        draw_text_centered(img, icon, (x1, x2), 240, ICON_LARGE)  # forecast icon
+        draw_text_centered(img, day, (x1, x2), 310, OPEN_SANS_SMALL)  # forecast date
+        draw_text_centered(img, weekday, (x1, x2), 330, OPEN_SANS_SMALL)  # forecast weekday
         draw_text_centered(img, min_max_temp, (x1, x2), 350, OPEN_SANS_SMALL)  # min/max
 
     return img

@@ -7,5 +7,6 @@ which has a resolution of 640x384.
 ### Environment Variables
 
 **OPEN_WEATHER_MAP_API** - Your OpenWeatherMap API key  
-**MAPBOX_API** - Your MapBox API key  
+**LOCATION_NAME** - The display name of the location you want to report the weather on  
 **LOCATION_COORDS** - The location you want to report the weather on  
+  

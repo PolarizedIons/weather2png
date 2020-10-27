@@ -6,7 +6,7 @@ LOCATION_URL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/{lon},{lat}.js
 
 OPEN_WEATHER_MAP_API_KEY = getenv("OPEN_WEATHER_MAP_API")
 LOCATION_COORDS = getenv("LOCATION_COORDS")
-MAPBOX_API = getenv("MAPBOX_API")
+LOCATION_NAME = getenv("LOCATION_NAME")
 
 if not OPEN_WEATHER_MAP_API_KEY:
     raise Exception("OPEN_WEATHER_MAP_API is not set")
@@ -14,8 +14,8 @@ if not OPEN_WEATHER_MAP_API_KEY:
 if not LOCATION_COORDS:
     raise Exception("LOCATION_COORDS is not set")
 
-if not MAPBOX_API:
-    raise Exception("MAPBOX_API is not set")
+if not LOCATION_NAME:
+    raise Exception("LOCATION_NAME is not set")
 
 
 def get_weather():
@@ -34,5 +34,3 @@ def _get_location_name():
     res = r.json()
     return res['features'][0]['text']
 
-
-LOCATION_NAME = _get_location_name()
