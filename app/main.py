@@ -149,23 +149,23 @@ def make_weather_image() -> Image:
     draw_text(img, get_now_dt(weather['timezone_offset']), (-10, -10), OPEN_SANS_MEDIUM, WHITE, header_rect_size)  # date & time
 
     # CURRENT WEATHER
-    draw_text(img, current_icon, (DISPLAY_SIZE[0] / 8 - 55, 90), ICON_EXTRA_LARGE)  # current icon
-    draw_text(img, current_temp, (-25, 100), OPEN_SANS_LARGE, bounds=(DISPLAY_SIZE[0] / 2, DISPLAY_SIZE[1]))  # current temp
-    draw_text(img, today_min_max_temp, (-25, 170), OPEN_SANS_MEDIUM, bounds=(DISPLAY_SIZE[0] / 2, DISPLAY_SIZE[1]))  # min/max
+    draw_text(img, "daytime", (-5, 80), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # sunrise/sunset caption
+    draw_text(img, "pressure", (-5, 110), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # pressure caption
+    draw_text(img, "humidity", (-5, 140), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # humidity caption
+    draw_text(img, "Midday UV", (-5, 170), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # UV caption
+    draw_text(img, "wind", (-5, 200), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # wind caption
+
+    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 4 - 20, 70), OPEN_SANS_MEDIUM)  # sunrise text
+    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 4 - 20, 100), OPEN_SANS_MEDIUM)  # pressure text
+    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 4 - 20, 130), OPEN_SANS_MEDIUM)  # humidity text
+    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 4 - 20, 160), OPEN_SANS_MEDIUM)  # UV text
+    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 4 - 20, 190), OPEN_SANS_MEDIUM)  # wind text
 
     draw_line(img, (DISPLAY_SIZE[0] / 2, 70), (DISPLAY_SIZE[0] / 2, 230))  # separator line
 
-    draw_text(img, "daytime", (DISPLAY_SIZE[0] / 2 + 25, 80), OPEN_SANS_SMALL)  # sunrise/sunset caption
-    draw_text(img, "pressure", (DISPLAY_SIZE[0] / 2 + 25, 110), OPEN_SANS_SMALL)  # pressure caption
-    draw_text(img, "humidity", (DISPLAY_SIZE[0] / 2 + 25, 140), OPEN_SANS_SMALL)  # humidity caption
-    draw_text(img, "Midday UV", (DISPLAY_SIZE[0] / 2 + 25, 170), OPEN_SANS_SMALL)  # UV caption
-    draw_text(img, "wind", (DISPLAY_SIZE[0] / 2 + 25, 200), OPEN_SANS_SMALL)  # wind caption
-
-    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 2 + 120, 70), OPEN_SANS_MEDIUM)  # sunrise text
-    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 2 + 120, 100), OPEN_SANS_MEDIUM)  # pressure text
-    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 2 + 120, 130), OPEN_SANS_MEDIUM)  # humidity text
-    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 2 + 120, 160), OPEN_SANS_MEDIUM)  # UV text
-    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 2 + 120, 190), OPEN_SANS_MEDIUM)  # wind text
+    draw_text(img, current_icon, (DISPLAY_SIZE[0] / 8 * 4 + 25, 90), ICON_EXTRA_LARGE)  # current icon
+    draw_text(img, current_temp, (-15, 100), OPEN_SANS_LARGE)  # current temp
+    draw_text(img, today_min_max_temp, (-15, 170), OPEN_SANS_MEDIUM)  # min/max
 
     # FORECAST WEATHER
 
