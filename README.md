@@ -1,8 +1,8 @@
 # weather2png
 ## Show the current weather as an image
 
-This project is designed to be used on a Waveshare 7.5 inch e-ink display, 
-which has a resolution of 640x384.
+This project is designed to be used on a Waveshare 7.5 inch V2 e-ink display, 
+which has a resolution of 800x480.
 
 ### Environment Variables
 

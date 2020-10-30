@@ -10,7 +10,7 @@ from Api import get_weather, LOCATION_NAME
 app = Flask(__name__)
 
 
-DISPLAY_SIZE = (640, 384)
+DISPLAY_SIZE = (800, 480)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
@@ -143,29 +143,29 @@ def make_weather_image() -> Image:
     img = create_image()
 
     # HEADER
-    header_rect_size = (DISPLAY_SIZE[0], 60)
+    header_rect_size = (DISPLAY_SIZE[0], 80)
     draw_rect(img, (0, 0), header_rect_size)
     draw_text(img, LOCATION_NAME, (10, -10), OPEN_SANS_LARGE, WHITE, header_rect_size)  # location name
     draw_text(img, get_now_dt(weather['timezone_offset']), (-10, -10), OPEN_SANS_MEDIUM, WHITE, header_rect_size)  # date & time
 
     # CURRENT WEATHER
-    draw_text(img, "daytime", (-5, 80), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # sunrise/sunset caption
-    draw_text(img, "pressure", (-5, 110), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # pressure caption
-    draw_text(img, "humidity", (-5, 140), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # humidity caption
-    draw_text(img, "Midday UV", (-5, 170), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # UV caption
-    draw_text(img, "wind", (-5, 200), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # wind caption
+    draw_text(img, "daytime", (-5, 100), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # sunrise/sunset caption
+    draw_text(img, "pressure", (-5, 130), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # pressure caption
+    draw_text(img, "humidity", (-5, 160), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # humidity caption
+    draw_text(img, "Midday UV", (-5, 190), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # UV caption
+    draw_text(img, "wind", (-5, 220), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # wind caption
 
-    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 4 - 20, 70), OPEN_SANS_MEDIUM)  # sunrise text
-    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 4 - 20, 100), OPEN_SANS_MEDIUM)  # pressure text
-    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 4 - 20, 130), OPEN_SANS_MEDIUM)  # humidity text
-    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 4 - 20, 160), OPEN_SANS_MEDIUM)  # UV text
-    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 4 - 20, 190), OPEN_SANS_MEDIUM)  # wind text
+    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 4 - 20, 90), OPEN_SANS_MEDIUM)  # sunrise text
+    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 4 - 20, 120), OPEN_SANS_MEDIUM)  # pressure text
+    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 4 - 20, 150), OPEN_SANS_MEDIUM)  # humidity text
+    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 4 - 20, 180), OPEN_SANS_MEDIUM)  # UV text
+    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 4 - 20, 210), OPEN_SANS_MEDIUM)  # wind text
 
-    draw_line(img, (DISPLAY_SIZE[0] / 2, 70), (DISPLAY_SIZE[0] / 2, 230))  # separator line
+    draw_line(img, (DISPLAY_SIZE[0] / 2, 90), (DISPLAY_SIZE[0] / 2, 250))  # separator line
 
-    draw_text(img, current_icon, (DISPLAY_SIZE[0] / 8 * 4 + 25, 90), ICON_EXTRA_LARGE)  # current icon
-    draw_text(img, current_temp, (-15, 100), OPEN_SANS_LARGE)  # current temp
-    draw_text(img, today_min_max_temp, (-15, 170), OPEN_SANS_MEDIUM)  # min/max
+    draw_text(img, current_icon, (DISPLAY_SIZE[0] / 8 * 4 + 50, 110), ICON_EXTRA_LARGE)  # current icon
+    draw_text(img, current_temp, (-30, 120), OPEN_SANS_LARGE)  # current temp
+    draw_text(img, today_min_max_temp, (-30, 190), OPEN_SANS_MEDIUM)  # min/max
 
     # FORECAST WEATHER
 
@@ -182,10 +182,10 @@ def make_weather_image() -> Image:
         max_temp = str(int(forecast['temp']['max'])) + "°C"
         min_max_temp = min_temp + " / " + max_temp
 
-        draw_text_centered(img, icon, (x1, x2), 240, ICON_LARGE)  # forecast icon
-        draw_text_centered(img, day, (x1, x2), 310, OPEN_SANS_SMALL)  # forecast date
-        draw_text_centered(img, weekday, (x1, x2), 330, OPEN_SANS_SMALL)  # forecast weekday
-        draw_text_centered(img, min_max_temp, (x1, x2), 350, OPEN_SANS_SMALL)  # min/max
+        draw_text_centered(img, icon, (x1, x2), 270, ICON_LARGE)  # forecast icon
+        draw_text_centered(img, day, (x1, x2), 340, OPEN_SANS_SMALL)  # forecast date
+        draw_text_centered(img, weekday, (x1, x2), 360, OPEN_SANS_SMALL)  # forecast weekday
+        draw_text_centered(img, min_max_temp, (x1, x2), 380, OPEN_SANS_SMALL)  # min/max
 
     return img
 
