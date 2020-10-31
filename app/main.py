@@ -14,17 +14,17 @@ DISPLAY_SIZE = (800, 480)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-EXTRA_LARGE_FONT_SIZE = 100
+EXTRA_LARGE_FONT_SIZE = 150
 LARGE_FONT_SIZE = 50
 MEDIUM_FONT_SIZE = 25
 SMALL_FONT_SIZE = 15
 
 dir_path = path.dirname(path.realpath(__file__))
 
-OPEN_SANS_EXTRA_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), EXTRA_LARGE_FONT_SIZE)
-OPEN_SANS_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), LARGE_FONT_SIZE)
-OPEN_SANS_MEDIUM = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), MEDIUM_FONT_SIZE)
-OPEN_SANS_SMALL = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Light.ttf"), SMALL_FONT_SIZE)
+OPEN_SANS_EXTRA_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Regular.ttf"), EXTRA_LARGE_FONT_SIZE)
+OPEN_SANS_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Regular.ttf"), LARGE_FONT_SIZE)
+OPEN_SANS_MEDIUM = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Regular.ttf"), MEDIUM_FONT_SIZE)
+OPEN_SANS_SMALL = ImageFont.truetype(path.join(dir_path, "./fonts/OpenSans-Regular.ttf"), SMALL_FONT_SIZE)
 ICON_EXTRA_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), EXTRA_LARGE_FONT_SIZE)
 ICON_LARGE = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), LARGE_FONT_SIZE)
 ICON_MEDIUM = ImageFont.truetype(path.join(dir_path, "./fonts/weathericons-regular-webfont.ttf"), MEDIUM_FONT_SIZE)
@@ -70,7 +70,7 @@ def draw_text(img: Image, text: str, position: (int, int), font: ImageFont = OPE
         _, y = d.textsize(text, font)
         y = bounds[1] - y + position[1]
 
-    d.text((x, y), text, fill, font)
+    d.multiline_text((x, y), text, fill, font)
     return img
 
 
@@ -78,7 +78,7 @@ def draw_text_centered(img: Image, text: str, x_bounds: (int, int), y: int, font
     d = ImageDraw.Draw(img)
     width, _ = d.textsize(text, font)
     x = (x_bounds[1] - x_bounds[0]) / 2 - (width / 2) + x_bounds[0]
-    d.text((x, y), text, fill, font)
+    d.multiline_text((x, y), text, fill, font)
     return img
 
 
@@ -149,26 +149,25 @@ def make_weather_image() -> Image:
     draw_text(img, get_now_dt(weather['timezone_offset']), (-10, -10), OPEN_SANS_MEDIUM, WHITE, header_rect_size)  # date & time
 
     # CURRENT WEATHER
-    draw_text(img, "daytime", (-5, 100), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # sunrise/sunset caption
-    draw_text(img, "pressure", (-5, 130), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # pressure caption
-    draw_text(img, "humidity", (-5, 160), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # humidity caption
-    draw_text(img, "Midday UV", (-5, 190), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # UV caption
-    draw_text(img, "wind", (-5, 220), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4 - 25, DISPLAY_SIZE[1]))  # wind caption
+    draw_text(img, "daytime", (-5, 110), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4, DISPLAY_SIZE[1]))  # sunrise/sunset caption
+    draw_text(img, "pressure", (-5, 145), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4, DISPLAY_SIZE[1]))  # pressure caption
+    draw_text(img, "humidity", (-5, 180), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4, DISPLAY_SIZE[1]))  # humidity caption
+    draw_text(img, "Midday UV", (-5, 215), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4, DISPLAY_SIZE[1]))  # UV caption
+    draw_text(img, "wind", (-5, 250), OPEN_SANS_SMALL, bounds=(DISPLAY_SIZE[0] / 4, DISPLAY_SIZE[1]))  # wind caption
 
-    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 4 - 20, 90), OPEN_SANS_MEDIUM)  # sunrise text
-    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 4 - 20, 120), OPEN_SANS_MEDIUM)  # pressure text
-    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 4 - 20, 150), OPEN_SANS_MEDIUM)  # humidity text
-    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 4 - 20, 180), OPEN_SANS_MEDIUM)  # UV text
-    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 4 - 20, 210), OPEN_SANS_MEDIUM)  # wind text
+    draw_text(img, today_daytime, (DISPLAY_SIZE[0] / 4, 100), OPEN_SANS_MEDIUM)  # sunrise text
+    draw_text(img, today_pressure, (DISPLAY_SIZE[0] / 4, 135), OPEN_SANS_MEDIUM)  # pressure text
+    draw_text(img, today_humidity, (DISPLAY_SIZE[0] / 4, 170), OPEN_SANS_MEDIUM)  # humidity text
+    draw_text(img, today_uv, (DISPLAY_SIZE[0] / 4, 205), OPEN_SANS_MEDIUM)  # UV text
+    draw_text(img, today_wind, (DISPLAY_SIZE[0] / 4, 240), OPEN_SANS_MEDIUM)  # wind text
 
-    draw_line(img, (DISPLAY_SIZE[0] / 2, 90), (DISPLAY_SIZE[0] / 2, 250))  # separator line
+    draw_line(img, (DISPLAY_SIZE[0] / 2, 90), (DISPLAY_SIZE[0] / 2, 280))  # separator line
 
-    draw_text(img, current_icon, (DISPLAY_SIZE[0] / 8 * 4 + 50, 110), ICON_EXTRA_LARGE)  # current icon
-    draw_text(img, current_temp, (-30, 120), OPEN_SANS_LARGE)  # current temp
-    draw_text(img, today_min_max_temp, (-30, 190), OPEN_SANS_MEDIUM)  # min/max
+    draw_text_centered(img, current_icon, (DISPLAY_SIZE[0] / 4 * 2, DISPLAY_SIZE[0] / 4 * 3), 80, ICON_EXTRA_LARGE)  # current weather icon
+    draw_text_centered(img, current_temp, (DISPLAY_SIZE[0] / 4 * 3, DISPLAY_SIZE[0]),  140, OPEN_SANS_LARGE)  # current weather temp
+    draw_text_centered(img, today_min_max_temp, (DISPLAY_SIZE[0] / 4 * 3, DISPLAY_SIZE[0]), 200, OPEN_SANS_MEDIUM)  # today's min/max
 
     # FORECAST WEATHER
-
     for i in range(1, 6):
         forecast = weather['daily'][i]
 
@@ -182,11 +181,22 @@ def make_weather_image() -> Image:
         max_temp = str(int(forecast['temp']['max'])) + "°C"
         min_max_temp = min_temp + " / " + max_temp
 
-        draw_text_centered(img, icon, (x1, x2), 270, ICON_LARGE)  # forecast icon
-        draw_text_centered(img, day, (x1, x2), 340, OPEN_SANS_SMALL)  # forecast date
-        draw_text_centered(img, weekday, (x1, x2), 360, OPEN_SANS_SMALL)  # forecast weekday
-        draw_text_centered(img, min_max_temp, (x1, x2), 380, OPEN_SANS_SMALL)  # min/max
+        draw_text_centered(img, icon, (x1, x2), 310, ICON_LARGE)  # forecast icon
+        draw_text_centered(img, day, (x1, x2), 380, OPEN_SANS_SMALL)  # forecast date
+        draw_text_centered(img, weekday, (x1, x2), 400, OPEN_SANS_SMALL)  # forecast weekday
+        draw_text_centered(img, min_max_temp, (x1, x2), 420, OPEN_SANS_SMALL)  # min/max
 
+    return img
+
+
+def make_error_image(error: Exception) -> Image:
+    import traceback
+    img = create_image()
+    draw_rect(img, (0, 0), (DISPLAY_SIZE[0], 80))
+    draw_text(img, "Error!", (10, -10), OPEN_SANS_LARGE, WHITE, (DISPLAY_SIZE[0], 80))
+
+    draw_text(img, str(error), (10, 90), OPEN_SANS_SMALL)
+    draw_text(img, traceback.format_exc(), (10, 110), OPEN_SANS_SMALL)
     return img
 
 
@@ -208,6 +218,11 @@ def add_header(res: Response):
     res.headers["Expires"] = "0"
     res.headers['Cache-Control'] = 'no-store'
     return res
+
+
+@app.errorhandler(Exception)
+def exception_handler(error: Exception):
+    return serve_image(make_error_image(error))
 
 
 if __name__ == "__main__":
