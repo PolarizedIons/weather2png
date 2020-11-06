@@ -146,8 +146,8 @@ def make_weather_image() -> Image:
     today_min_temp = str(int(weather['daily'][0]['temp']['min'])) + "°C"
     today_max_temp = str(int(weather['daily'][0]['temp']['max'])) + "°C"
     today_min_max_temp = today_min_temp + " / " + today_max_temp
-    today_sunrise = format_time(datetime.fromtimestamp(weather['daily'][0]['sunrise']), weather['timezone_offset'])
-    today_sunset = format_time(datetime.fromtimestamp(weather['daily'][0]['sunset']), weather['timezone_offset'])
+    today_sunrise = format_time(datetime.utcfromtimestamp(weather['daily'][0]['sunrise']), weather['timezone_offset'])
+    today_sunset = format_time(datetime.utcfromtimestamp(weather['daily'][0]['sunset']), weather['timezone_offset'])
     today_daytime = today_sunrise + " - " + today_sunset
     today_pressure = str(weather['daily'][0]['pressure']) + "hPa"
     today_humidity = str(weather['daily'][0]['humidity']) + "%"
