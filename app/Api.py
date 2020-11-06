@@ -2,6 +2,7 @@ from os import getenv
 import requests
 
 WEATHER_URL = 'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&appid={appid}&units=metric'
+QUOTE_URL = 'https://quotes.rest/qod?language=en'
 
 OPEN_WEATHER_MAP_API_KEY = getenv("OPEN_WEATHER_MAP_API")
 LOCATION_COORDS = getenv("LOCATION_COORDS")
@@ -23,3 +24,14 @@ def get_weather():
     print(f'[FETCHING] {url}')
     r = requests.get(url)
     return r.json()
+
+
+def get_quote():
+    try:
+        print(f'[FETCHING] {QUOTE_URL}')
+        r = requests.get(QUOTE_URL)
+        res = r.json()
+        quote = res['contents']['quotes'][0]
+        return quote['quote'], quote['author']
+    except KeyError:
+        return 'TODAY is a most unusual day, because we have never lived it before; we will never live it again; it is the only day we have.', 'William Arthur Ward'
