@@ -13,8 +13,8 @@ jobs:
       - name: Build Container & Publish to Github Registry
         uses: elgohr/Publish-Docker-Github-Action@2.14
         with:
-          name: polarizedions/weather2png/weather2png
+          name: polarizedions/weather2png
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
+          registry: ghcr.io
           tags: "latest,v1.${{ github.run_number }}"
