@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build Container & Publish to Github Registry
-        uses: elgohr/Publish-Docker-Github-Action@2.14
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: polarizedions/weather2png
           username: ${{ github.actor }}
